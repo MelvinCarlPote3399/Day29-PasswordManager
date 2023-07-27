@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import *
 import pyperclip
-
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 # Incorporating list comprehension in this function
 def generate_password():
@@ -35,7 +35,13 @@ def save():
     website = website_entry.get()
     email = email_user_entry.get()
     password = generate_password_entry.get()
-
+    # New dictionary
+    new_data = {
+        website: {
+            "email": email,
+            "password": password,
+        }
+    }
     """
     Checks to see if the fields are empty; if empty, a dialog window will pop up
     Else statement --> Will prompt user to confirm if entered info is correct; 
@@ -45,16 +51,31 @@ def save():
         messagebox.showinfo(title="Error", message=f"Do not leave any fields empty")
 
     else:
-        is_ok = messagebox.askokcancel(title=website, message=f"Details entered:\nWebsite: {website}"
-                                                              f"\nEmail: {email}\nPassword: {password}")
+        # is_ok = messagebox.askokcancel(title=website, message=f"Details entered:\nWebsite: {website}\nEmail: {email}\nPassword: {password}")
+        # if is_ok:
+        try:
+            with open("data.json", "r") as data_file:
+                # Implementing JSON
+                # Reading old data
+                data = json.load(data_file) # creates dictionary, reading from JSON file data
+        except FileNotFoundError:
+            with open("data.json","w") as data_file:
+                # Saving updated data
+                json.dump(new_data, data_file, indent=4)
 
-        if is_ok:
-            with open("data.txt", "a") as data_file:
-                data_file.write(f"{website} | {email} | {password}\n")
-                # Once data has been submitted, the text fields will clear upon execution
-                website_entry.delete(0, END)
-                generate_password_entry.delete(0, END)
-                email_user_entry.delete(0, END)
+        else:
+            # Updating old data with new data
+            data.update(new_data)
+
+            with open("data.json","w") as data_file:
+                # Saving updated data
+                json.dump(new_data, data_file, indent=4)
+
+        # Once data has been submitted, the text fields will clear upon execution
+        finally:
+            website_entry.delete(0, END)
+            generate_password_entry.delete(0, END)
+            email_user_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
