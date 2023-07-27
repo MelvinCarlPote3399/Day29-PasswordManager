@@ -94,24 +94,27 @@ canvas.grid(column=2, row=0)
 # Labels & Buttons
 website = Label(text="Website:")
 website.grid(column=1, row=1)
-website_entry = Entry(window, width=35)
-website_entry.grid(column=2, row=1, columnspan=2)
+website_entry = Entry(window, width=25)
+website_entry.grid(column=1, row=1, columnspan=2)
 website_entry.focus()
 
 email_user = Label(text="Email/Username:")
-email_user.grid(column=1, row=3)
-email_user_entry = Entry(window, width=35)
-email_user_entry.grid(column=2, row=3, columnspan=2)
+email_user.grid(column=1, row=2)
+email_user_entry = Entry(window, width=45)
+email_user_entry.grid(column=2, row=2)
 
-password = Label(text="Password:")
-password.grid(column=1, row=4)
+password = Label(text="Password:", padx=31)
+password.grid(column=1, row=3)
 generate_password = Button(text="Generate Password", command=generate_password)
-generate_password.grid(column=3, row=4, columnspan=1)
-generate_password_entry = Entry(window)
-generate_password_entry.grid(column=2, row=4)
+generate_password.grid(column=2, row=3, columnspan=3, padx=205)
+generate_password_entry = Entry(window, width=25)
+generate_password_entry.grid(column=1, row=3, columnspan=2)
 
 add_password = Button(text="Add", width=30, command=save)
-add_password.grid(column=2, row=6, columnspan=2)
+add_password.grid(column=2, row=4, columnspan=1)
+
+search = Button(text="Search")
+search.grid(column=2, row=1,columnspan=2, padx=20)
 
 # Pre-populate email field with text
 # email_user_entry.insert(0, "randomemail.com")
