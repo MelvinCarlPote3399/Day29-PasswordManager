@@ -60,7 +60,6 @@ def save():
                 data = json.load(data_file) # creates dictionary, reading from JSON file data
         except FileNotFoundError:
             with open("data.json","w") as data_file:
-                # Saving updated data
                 json.dump(new_data, data_file, indent=4)
 
         else:
@@ -69,7 +68,7 @@ def save():
 
             with open("data.json","w") as data_file:
                 # Saving updated data
-                json.dump(new_data, data_file, indent=4)
+                json.dump(data, data_file, indent=4)
 
         # Once data has been submitted, the text fields will clear upon execution
         finally:
