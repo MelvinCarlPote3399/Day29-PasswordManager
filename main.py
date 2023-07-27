@@ -39,7 +39,7 @@ def save():
     new_data = {
         website: {
             "email": email,
-            "password": password,
+            "password": password
         }
     }
     """
@@ -78,6 +78,21 @@ def save():
             email_user_entry.delete(0, END)
 
 
+# ----------------------------Finding password ------------------------ #
+def find_password():
+    website = website_entry.get()
+    try:
+        with open("data.json") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error",message="Data File Not Found.")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            user_password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Email: {email}\nPassword:{user_password}")
+        else:
+            messagebox.showinfo(title="Error",message=f"Detail for {website} do not exist.")
 # ---------------------------- UI SETUP ------------------------------- #
 
 # Window set-up
@@ -113,7 +128,7 @@ generate_password_entry.grid(column=1, row=3, columnspan=2)
 add_password = Button(text="Add", width=30, command=save)
 add_password.grid(column=2, row=4, columnspan=1)
 
-search = Button(text="Search")
+search = Button(text="Search", command=find_password)
 search.grid(column=2, row=1,columnspan=2, padx=20)
 
 # Pre-populate email field with text
